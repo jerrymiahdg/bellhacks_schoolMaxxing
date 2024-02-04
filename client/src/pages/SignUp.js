@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Form from "../components/Form";
 import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../App";
+import { UserContext } from "../App";
+import { useContext } from "react";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,6 +12,8 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
+  const setLoggingIn = useContext(LoginContext).setLoggingIn;
+  const setUser = useContext(UserContext).setUser;
 
   useEffect(() => {
     setValid(
@@ -21,27 +26,27 @@ const SignUp = () => {
   }, [firstName, lastName, username, password]);
 
   const onClickHandler = () => {
-    const user = {
-      email: username,
-      firstName: firstName,
-      id: 0,
-      is_admin: false,
-      lastName: lastName,
-      password: password,
-      school_id: 0,
-      username: username
-    }
+    // const user = {
+    //   email: username,
+    //   firstName: firstName,
+    //   is_admin: false,
+    //   lastName: lastName,
+    //   password: password,
+    //   username: username
+    // }
 
-    window.location.href = "/find"
+    // setLoggingIn(true);
+    // setUser(user);
+    // window.location.href = "/find";
     
-    fetch("/users/createUsers", {
-      method: 'POST',
-      credentials: "same-origin",
-      body: JSON.stringify(user),
-      headers: {
-        "content-type": "application/json"
-      }
-    })
+    // fetch("/users/createUsers", {
+    //   method: 'POST',
+    //   credentials: "same-origin",
+    //   body: JSON.stringify(user),
+    //   headers: {
+    //     "content-type": "application/json"
+    //   }
+    // })
   };
 
   return (

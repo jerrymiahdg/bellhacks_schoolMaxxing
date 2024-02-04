@@ -2,13 +2,15 @@ import Input from "../components/Input";
 import Form from "../components/Form";
 import { useEffect, useState } from "react";
 import {useContext} from "react";
-import UserContext from "../App"
+import { UserContext } from "../App"
+import { LoginContext } from "../App";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
-  const users = useContext(users).users;
+  const users = useContext(UserContext).users;
+  const setLoggedIn = useContext(LoginContext).setLoggedIn;
 
   useEffect(() => {
     setValid(username.length > 0 && password.length > 0);
@@ -19,7 +21,7 @@ const Login = () => {
     console.log(username, password);
     users.forEach((user) => {
       if(user.username === username && user.password === password) {
-        setValid(true);
+        setLoggedIn(true);
       }
     })
   };

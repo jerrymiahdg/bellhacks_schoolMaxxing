@@ -12,6 +12,7 @@ const NavBar = () => {
           <>
             <a href='google.com'>Share</a>
             <a href='google.com'>Profile</a>
+            <a href='google.com'>Log out</a>
           </>
         ) : (
           <>
