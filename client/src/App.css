@@ -25,6 +25,7 @@
 }
 
 button {
+  cursor: pointer;
   border: none;
   background: var(--yellow-primary);
   color: white;
@@ -33,6 +34,11 @@ button {
   font-family: "Inter", sans-serif;
   margin: 15px;
   width: 100%;
+  transition: 400ms;
+}
+
+button:hover {
+  opacity: 80%;
 }
 
 .app {
@@ -97,14 +103,13 @@ button {
   width: 100%;
 }
 
-.finder-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.invalid {
+  cursor: default;
+  opacity: 50%;
 }
 
-.invalid {
-  opacity: 50%;
+.invalid:hover {
+  background-color: var(--yellow-primary);
 }
 
 .selected {
@@ -223,4 +228,22 @@ button {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+}
+
+.school-button {
+  width: 100%;
+  padding: 10px;
+}
+
+.finder-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px);
+  align-items: center;
+}
+
+.find-input {
+  color: black;
+  padding: 15px;
+  font-size: 20px;
 }

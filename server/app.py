@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, request, render_template, redirect, url_for
-from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
-import random
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
@@ -79,7 +77,7 @@ def getUsers():
 @app.route('/schools/getSchools', methods=['GET'])
 def getSchools():
     schools = Schools.query.all()
-    school_list = [{'id': school.id, 'name': school.username, 'location': school.location, 'mascot':school.mascot} for school in schools]
+    school_list = [{'id': school.id, 'name': school.name, 'location': school.location, 'mascot': school.mascot} for school in schools]
     return jsonify(school_list)
 @app.route('/school/createSchool', methods=['POST'])
 def createSchool():
@@ -143,7 +141,7 @@ def getFavorites():
     favorites = Favorites.query.all()
     favorites_list = [{'id': favorite.id, 'post_id': favorite.post_id, 'user_id': favorite.user_id, 'school_id': favorite.school_id} for favorite in favorites]
     return jsonify(favorites_list)
-@app.route('favorites/addFavorites', methods=['POST'])
+@app.route('/favorites/addFavorites', methods=['POST'])
 def addFavorites():
     post_id = request.json['post_id']
     user_id = request.json['user_id']
