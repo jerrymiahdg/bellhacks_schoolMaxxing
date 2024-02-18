@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import { LoginContext } from "../App";
 import { UserContext } from "../App";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,6 +13,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
   const setUser = useContext(UserContext).setUser;
+  const navigate = useNavigate();
 
   useEffect(() => {
     setValid(
@@ -33,8 +35,7 @@ const SignUp = () => {
       username: username,
     };
     setUser(user);
-    // window.location.href = "/find";
-    window.history.pushState("", "", "/find");
+    navigate("/find");
   };
 
   return (
@@ -47,8 +48,8 @@ const SignUp = () => {
     >
       <Input placeholder="First Name" setter={setFirstName} />
       <Input placeholder="Last Name" setter={setLastName} />
-      <Input placeholder="Username" setter={setUsername} password />
-      <Input placeholder="Password" setter={setPassword} />
+      <Input placeholder="Username" setter={setUsername} />
+      <Input placeholder="Password" setter={setPassword} password />
     </Form>
   );
 };

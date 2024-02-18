@@ -60,13 +60,13 @@ def createUsers():
     password = request.json['password']
     firstName = request.json['firstName']
     lastName = request.json['lastName']
-    is_admin = False
+    is_admin = request.json['is_admin']
     is_banned = False
     school_id = request.json['school_id']
     newUser = Users(username=username, password=password, firstName=firstName, lastName=lastName, is_admin=is_admin, is_banned=is_banned, school_id=school_id)
     db.session.add(newUser)
     db.session.commit()
-    return "User was created successfully"
+    return jsonify({"id": newUser.id})
 
 @app.route('/users/getUsers', methods=['GET'])
 def getUsers():
@@ -79,7 +79,8 @@ def getSchools():
     schools = Schools.query.all()
     school_list = [{'id': school.id, 'name': school.name, 'location': school.location, 'mascot': school.mascot} for school in schools]
     return jsonify(school_list)
-@app.route('/school/createSchool', methods=['POST'])
+
+@app.route('/schools/createSchool', methods=['POST'])
 def createSchool():
     name = request.json['name']
     location = request.json['location']
@@ -87,12 +88,14 @@ def createSchool():
     newSchool = Schools(name=name, location=location, mascot=mascot)
     db.session.add(newSchool)
     db.session.commit()
-    return "School was created successfully"
+    return jsonify({"id": newSchool.id})
+
 @app.route('/posts/getPosts', methods=['GET'])
 def getPosts():
     posts = Posts.query.all()
     post_list = [{'id': post.id, 'category_id': post.category_id, 'description': post.description, 'title': post.title, 'image': post.image, 'link': post.link, 'school_id': post.school_id, 'isFeatured': post.isFeatured} for post in posts]
     return jsonify(post_list)
+
 @app.route('/posts/addPosts', methods=['POST'])
 def addPosts():
     user_id = current_user.id
@@ -112,19 +115,22 @@ def addPosts():
         return "Post created successfully!"      
     else:
         return "You are banned, sorry!"
+    
 @app.route('/posts/deletePosts', methods=['POST'])
 def deletePosts(id):
     post = Posts.query.get(id)
     db.session.delete(post)
     return "Post has been removed"
+
 @app.route('/categories/getCategories', methods=['GET'])
 def getCategories():
     categories = Categories.query.all()
     category_list = [{'id': category.id, 'title': category.title, 'description': category.description, 'school_id': category.school_id} for category in categories]
     return jsonify(category_list)
+
 @app.route('/categories/addCategory', methods=['POST'])
 def addCategory():
-    user_id = current_user.id
+    user_id = request.json("user_id")
     user = Users.query.get(user_id)
     if user.is_admin:
         title = request.json['title']
@@ -136,6 +142,7 @@ def addCategory():
         return "Category was added successfully"
     else:
         return "You can't do that!"
+    
 @app.route('/favorites/getFavorites', methods=['GET'])
 def getFavorites():
     favorites = Favorites.query.all()

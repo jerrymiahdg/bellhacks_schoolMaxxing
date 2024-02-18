@@ -1,23 +1,33 @@
 import { useContext } from "react";
 import { LoginContext } from "../App";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const ctx = useContext(LoginContext);
 
+  const logoutClickHandler = () => {
+    ctx.setLoggedin(false);
+    localStorage.setItem("loggedIn", false);
+  };
+
   return (
-    <div className='navbar'>
-      <div className='title'>SchoolMaxxing</div>
-      <div className='buttons'>
+    <div className="navbar">
+      <Link to="/" className="title-link">
+        <div className="title">SchoolMaxxing</div>
+      </Link>
+      <div className="buttons">
         {ctx.loggedIn ? (
           <>
-            <a href='google.com'>Share</a>
-            <a href='google.com'>Profile</a>
-            <a href='google.com'>Log out</a>
+            <Link to="share">Share</Link>
+            <Link to="profile">Profile</Link>
+            <Link to="/" onClick={logoutClickHandler}>
+              Log out
+            </Link>
           </>
         ) : (
           <>
-            <a href='/signup'>Sign up</a>
-            <a href='/login'>Log in</a>
+            <Link to="signup">Sign up</Link>
+            <Link to="login">Log in</Link>
           </>
         )}
       </div>
